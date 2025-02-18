@@ -1,22 +1,25 @@
-import { GoogleMap, useLoadScript } from "@react-google-maps/api";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
 import "./Map.scss";
 
 function Map() {
   const google_api_key = import.meta.env.VITE_MAPS_API_KEY;
-  const { isLoaded } = useLoadScript({
+  const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: google_api_key,
   });
 
+  if (loadError) {
+    return <div>Error loading Maps</div>;
+  }
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <div>Loading</div>;
   }
   return (
     <section className="map">
       <GoogleMap
-        defaultZoom={7}
-        defaultCenter={{ lat: 43.653225, lng: -79.383186 }}
-        mapContainerStyle={{ width: "100%", height: "43.75rem" }}
+        zoom={10}
+        center={{ lat: 43.653225, lng: -79.383186 }}
+        mapContainerStyle={{ width: "50%", height: "500px" }}
       />
     </section>
   );
