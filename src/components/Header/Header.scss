@@ -1,0 +1,23 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+
+  @include tablet {
+    padding: 2rem;
+  }
+
+  &__logo {
+    @include page-header;
+  }
+
+  &__nav {
+    display: flex;
+    gap: 1rem;
+    @include body-medium;
+  }
+}

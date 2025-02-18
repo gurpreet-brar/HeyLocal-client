@@ -1,0 +1,40 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.featured {
+  margin: 2rem;
+  &__title {
+    @include page-subheader;
+  }
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__carousel {
+    display: flex;
+    overflow-x: auto;
+    gap: 1.25rem;
+    padding: 1.25rem;
+  }
+
+  &__event-card img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+
+  &__main {
+    width: 100%;
+    height: 25rem;
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
