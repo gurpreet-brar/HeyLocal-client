@@ -1,5 +1,6 @@
 import "./AddEventPage.scss";
 import Map from "../../components/Map/Map";
+import { useState } from "react";
 
 function AddEventPage() {
   const google_api_key = import.meta.env.VITE_MAPS_API_KEY;
@@ -15,6 +16,8 @@ function AddEventPage() {
     "Technology",
     "Sports",
   ];
+  const [address, setAddress] = useState("");
+  const [coordinates, setCoordinates] = useState(null);
 
   return (
     <main className="add__main">
@@ -51,6 +54,8 @@ function AddEventPage() {
             name="location"
             id="location"
             placeholder="Please enter the location for the event"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
           />
           <label htmlFor="date">Date of event</label>
           <input
@@ -76,7 +81,13 @@ function AddEventPage() {
             placeholder="Please enter number of available spots"
           />
         </form>
-        <Map />
+        <Map
+          address={address}
+          setAddress={setAddress}
+          coordinates={coordinates}
+          setCoordinates={setCoordinates}
+          isEditable={true}
+        />
       </section>
     </main>
   );
