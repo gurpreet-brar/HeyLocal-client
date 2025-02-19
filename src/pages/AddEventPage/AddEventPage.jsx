@@ -1,9 +1,12 @@
 import "./AddEventPage.scss";
 import Map from "../../components/Map/Map";
 import { useState } from "react";
+import axios from "axios";
 
 function AddEventPage() {
   const google_api_key = import.meta.env.VITE_MAPS_API_KEY;
+  const cloud_url = import.meta.env.VITE_CLOUDINARY_URL;
+  const upload_preset = import.meta.env.VITE_UPLOAD_PRESET;
   const Category = [
     "Welness",
     "Dance",
@@ -18,11 +21,28 @@ function AddEventPage() {
   ];
   const [address, setAddress] = useState("");
   const [coordinates, setCoordinates] = useState(null);
+  const [image, setImage] = useState(null);
+
+  const handleImageChange = (event) => {
+    const image = event.target.files[0];
+    if (image) {
+      setImage(image);
+    }
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("upload_preset", upload_preset);
+    const response = await axios.post(cloud_url, formData);
+    console.log(response.data);
+  };
 
   return (
     <main className="add__main">
       <section className="form__wrapper">
-        <form className="form">
+        <form className="form" onSubmit={handleFormSubmit}>
           <label htmlFor="title">Title</label>
           <input
             type="text"
@@ -80,6 +100,15 @@ function AddEventPage() {
             id="spots"
             placeholder="Please enter number of available spots"
           />
+          <label htmlFor="image">Upload Event image</label>
+          <input
+            type="file"
+            name="image"
+            id="image"
+            accept=".jpg, .jpeg, .png"
+            onChange={handleImageChange}
+          />
+          <button type="submit">Submit</button>
         </form>
         <Map
           address={address}
