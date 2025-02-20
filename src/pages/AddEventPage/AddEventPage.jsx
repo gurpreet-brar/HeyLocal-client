@@ -1,27 +1,39 @@
 import "./AddEventPage.scss";
 import Map from "../../components/Map/Map";
+import EventForm from "../../components/EventForm/EventForm";
+import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
 import axios from "axios";
 
 function AddEventPage() {
-  const google_api_key = import.meta.env.VITE_MAPS_API_KEY;
   const cloud_url = import.meta.env.VITE_CLOUDINARY_URL;
   const upload_preset = import.meta.env.VITE_UPLOAD_PRESET;
-  const Category = [
-    "Welness",
-    "Dance",
-    "Music & Arts",
-    "Entertainment",
-    "Crafts & Hobbies",
-    "Educational",
-    "Business",
-    "Social Impact",
-    "Technology",
-    "Sports",
-  ];
+
   const [address, setAddress] = useState("");
   const [coordinates, setCoordinates] = useState(null);
   const [image, setImage] = useState(null);
+  const [formInput, setFormInput] = useState({
+    title: "",
+    description: "",
+    category: "",
+    date: "",
+    time: "",
+    duration: "",
+    spots: "",
+    chat_link: "",
+  });
+  const [error, setError] = useState({
+    titleError: false,
+    descError: false,
+    categoryError: false,
+    locationError: false,
+    dateError: false,
+    timeError: false,
+    durationError: false,
+    spotsError: false,
+    imageError: false,
+    chatError: false,
+  });
 
   const handleImageChange = (event) => {
     const image = event.target.files[0];
@@ -30,88 +42,184 @@ function AddEventPage() {
     }
   };
 
+  const isTitleValid = () => {
+    if (!formInput.title.trim()) {
+      setError((prev) => ({ ...prev, titleError: "This field is required" }));
+      return false;
+    }
+    setError((prev) => ({ ...prev, titleError: false }));
+    return true;
+  };
+
+  const isDescValid = () => {
+    if (!formInput.description.trim()) {
+      setError((prev) => ({ ...prev, descError: "This field is required" }));
+      return false;
+    }
+    setError((prev) => ({ ...prev, descError: false }));
+    return true;
+  };
+
+  const isCategoryValid = () => {
+    if (!formInput.category) {
+      setError((prev) => ({
+        ...prev,
+        categoryError: "This field is required",
+      }));
+      return false;
+    }
+    setError((prev) => ({ ...prev, categoryError: false }));
+    return true;
+  };
+
+  const isDateValid = () => {
+    if (!formInput.date) {
+      setError((prev) => ({ ...prev, dateError: "This field is required" }));
+      return false;
+    }
+    setError((prev) => ({ ...prev, dateError: false }));
+    return true;
+  };
+
+  const isSpotsValid = () => {
+    if (!formInput.spots) {
+      setError((prev) => ({ ...prev, spotsError: "This field is required" }));
+      return false;
+    }
+    if (formInput.spots <= 0) {
+      setError((prev) => ({
+        ...prev,
+        spotsError: "Please enter a valid number",
+      }));
+      return false;
+    }
+    setError((prev) => ({ ...prev, spotsError: false }));
+    return true;
+  };
+
+  const isDurationValid = () => {
+    if (!formInput.duration) {
+      setError((prev) => ({
+        ...prev,
+        durationError: "This field is required",
+      }));
+      return false;
+    }
+    if (formInput.duration <= 0) {
+      setError((prev) => ({
+        ...prev,
+        spotsError: "Please enter valid duration in minutes",
+      }));
+      return false;
+    }
+    setError((prev) => ({ ...prev, durationError: false }));
+    return true;
+  };
+
+  const isTimeValid = () => {
+    if (!formInput.time) {
+      setError((prev) => ({ ...prev, timeError: "This field is required" }));
+      return false;
+    }
+    setError((prev) => ({ ...prev, timeError: false }));
+    return true;
+  };
+
+  const isChatLinkValid = () => {
+    if (!formInput.chat_link.trim()) {
+      setError((prev) => ({ ...prev, chatError: "This field is required" }));
+      return false;
+    }
+    setError((prev) => ({ ...prev, chatError: false }));
+    return true;
+  };
+
+  const isImageValid = () => {
+    if (!image) {
+      setError((prev) => ({ ...prev, imageError: "Please upload an image" }));
+      return false;
+    }
+    setError((prev) => ({ ...prev, imageError: false }));
+    return true;
+  };
+
+  const isAddressValid = () => {
+    if (!address.trim()) {
+      setError((prev) => ({
+        ...prev,
+        locationError: "This field is required",
+      }));
+      return false;
+    }
+    setError((prev) => ({ ...prev, locationError: false }));
+    return true;
+  };
+
+  const isFormValid = () => {
+    if (
+      !isTitleValid() ||
+      !isDescValid() ||
+      !isCategoryValid() ||
+      !isAddressValid() ||
+      !isDateValid() ||
+      !isTimeValid() ||
+      !isDurationValid() ||
+      !isSpotsValid() ||
+      !isChatLinkValid() ||
+      !isImageValid()
+    ) {
+      return false;
+    }
+    return true;
+  };
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    if (!isFormValid()) {
+      return;
+    }
+
     const formData = new FormData();
     formData.append("file", image);
     formData.append("upload_preset", upload_preset);
     const response = await axios.post(cloud_url, formData);
     console.log(response.data);
+    const imageUrl = response.data.secure_url;
+
+    const data = { ...formInput, image: imageUrl, address };
+    console.log(data);
+    toast("Event details successfully submitted!!");
+    setFormInput({
+      title: "",
+      description: "",
+      category: "",
+      date: "",
+      time: "",
+      duration: "",
+      spots: "",
+      chat_link: "",
+    });
+    setAddress("");
+    setCoordinates(null);
+    setImage(null);
   };
 
   return (
     <main className="add__main">
       <section className="form__wrapper">
-        <form className="form" onSubmit={handleFormSubmit}>
-          <label htmlFor="title">Title</label>
-          <input
-            type="text"
-            name="title"
-            id="title"
-            placeholder="Please enter title"
-          />
-          <label htmlFor="desc">Description</label>
-          <input
-            type="text"
-            name="description"
-            id="desc"
-            placeholder="Please enter description"
-          />
-          <label htmlFor="category">Category</label>
-          <select name="category" id="category" defaultValue="">
-            <option value="" disabled>
-              Please select
-            </option>
-            {Category.map((category, index) => (
-              <option key={index} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-          <label htmlFor="location">Location</label>
-          <input
-            type="text"
-            name="location"
-            id="location"
-            placeholder="Please enter the location for the event"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-          <label htmlFor="date">Date of event</label>
-          <input
-            type="date"
-            name="date"
-            id="date"
-            placeholder="Please enter date of event"
-          />
-          <label htmlFor="time">Time of Event</label>
-          <input type="time" name="time" id="time" />
-          <label htmlFor="duration">Enter duration in minutes</label>
-          <input
-            type="number"
-            name="duration"
-            id="duration"
-            placeholder="Please enter the duration of event"
-          />
-          <label htmlFor="spots">Number of available spots</label>
-          <input
-            type="number"
-            name="spots"
-            id="spots"
-            placeholder="Please enter number of available spots"
-          />
-          <label htmlFor="image">Upload Event image</label>
-          <input
-            type="file"
-            name="image"
-            id="image"
-            accept=".jpg, .jpeg, .png"
-            onChange={handleImageChange}
-          />
-          <button type="submit">Submit</button>
-        </form>
-        <Map
+        <EventForm
+          handleFormSubmit={handleFormSubmit}
+          image={image}
+          handleImageChange={handleImageChange}
           address={address}
+          setAddress={setAddress}
+          formInput={formInput}
+          setFormInput={setFormInput}
+          error={error}
+        />
+        <ToastContainer position="top-left" />
+
+        <Map
           setAddress={setAddress}
           coordinates={coordinates}
           setCoordinates={setCoordinates}
