@@ -3,7 +3,6 @@ import err from "../../assets/icons/error-24px.svg";
 
 function EventForm({
   handleFormSubmit,
-  image,
   handleImageChange,
   address,
   setAddress,
@@ -151,10 +150,10 @@ function EventForm({
       <label htmlFor="spots">Number of available spots</label>
       <input
         type="number"
-        name="spots"
+        name="total_spots"
         id="spots"
         placeholder="Please enter number of available spots"
-        value={formInput.spots}
+        value={formInput.total_spots}
         onChange={handleChange}
       />
       {error.spotsError && (

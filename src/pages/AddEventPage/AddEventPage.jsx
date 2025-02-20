@@ -8,10 +8,12 @@ import axios from "axios";
 function AddEventPage() {
   const cloud_url = import.meta.env.VITE_CLOUDINARY_URL;
   const upload_preset = import.meta.env.VITE_UPLOAD_PRESET;
+  const base_url = import.meta.env.VITE_API_URL;
 
   const [address, setAddress] = useState("");
   const [coordinates, setCoordinates] = useState(null);
   const [image, setImage] = useState(null);
+  const [imageURL, setImageURL] = useState(null);
   const [formInput, setFormInput] = useState({
     title: "",
     description: "",
@@ -19,7 +21,7 @@ function AddEventPage() {
     date: "",
     time: "",
     duration: "",
-    spots: "",
+    total_spots: "",
     chat_link: "",
   });
   const [error, setError] = useState({
@@ -82,7 +84,7 @@ function AddEventPage() {
   };
 
   const isSpotsValid = () => {
-    if (!formInput.spots) {
+    if (!formInput.total_spots) {
       setError((prev) => ({ ...prev, spotsError: "This field is required" }));
       return false;
     }
@@ -178,17 +180,27 @@ function AddEventPage() {
     if (!isFormValid()) {
       return;
     }
-
     const formData = new FormData();
     formData.append("file", image);
     formData.append("upload_preset", upload_preset);
-    const response = await axios.post(cloud_url, formData);
-    console.log(response.data);
-    const imageUrl = response.data.secure_url;
+    try {
+      const response = await axios.post(cloud_url, formData);
+      setImageURL(response.data.secure_url);
+    } catch (error) {
+      console.log("Error uploading image to cloudinary", error);
+    }
 
-    const data = { ...formInput, image: imageUrl, address };
-    console.log(data);
-    toast("Event details successfully submitted!!");
+    try {
+      const data = { ...formInput, location: address };
+      const response = await axios.post(`${base_url}/events`, data);
+      const event_id = response.data.id;
+      const image_data = { event_id, imageURL };
+      const res = await axios.post(`${base_url}/images`, image_data);
+      toast("Event details successfully submitted!!");
+    } catch (error) {
+      console.error("Error adding event in the backend", error);
+    }
+
     setFormInput({
       title: "",
       description: "",
@@ -196,12 +208,13 @@ function AddEventPage() {
       date: "",
       time: "",
       duration: "",
-      spots: "",
+      total_spots: "",
       chat_link: "",
     });
     setAddress("");
     setCoordinates(null);
     setImage(null);
+    setImageURL(null);
   };
 
   return (
@@ -209,7 +222,6 @@ function AddEventPage() {
       <section className="form__wrapper">
         <EventForm
           handleFormSubmit={handleFormSubmit}
-          image={image}
           handleImageChange={handleImageChange}
           address={address}
           setAddress={setAddress}
