@@ -29,7 +29,6 @@ function Featured() {
   useEffect(() => {
     getFeaturedEvents();
   }, []);
-  console.log(featuredEvents);
   return (
     <section className="featured">
       <h3 className="featured__title">Featured</h3>
