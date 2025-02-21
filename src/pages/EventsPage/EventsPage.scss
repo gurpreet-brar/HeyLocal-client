@@ -1,0 +1,12 @@
+.event__card img {
+  height: 500px;
+  width: auto;
+  object-fit: cover;
+  border-radius: 20px;
+  aspect-ratio: 10/9;
+}
+
+.event__card {
+  margin: 1rem auto;
+  width: 70%;
+}
