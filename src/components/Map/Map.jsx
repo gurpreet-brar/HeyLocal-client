@@ -5,15 +5,10 @@ import "./Map.scss";
 
 const libraries = ["places"];
 
-function Map({
-  address,
-  setAddress,
-  coordinates,
-  setCoordinates,
-  isEditable = false,
-}) {
+function Map({ address, setAddress, isEditable = false }) {
   const google_api_key = import.meta.env.VITE_MAPS_API_KEY;
   const autoCompleteRef = useRef(null);
+  const [coordinates, setCoordinates] = useState(null);
   const [userAddress, setUserAddress] = useState(null);
   const defaultCenter = { lat: 43.653225, lng: -79.383186 };
 
@@ -67,7 +62,10 @@ function Map({
       address
     )}&key=${google_api_key}`;
     const response = await axios.get(base_url);
-    console.log(response.data);
+    if (response.data.results.length > 0) {
+      const { lat, lng } = response.data.results[0].geometry.location;
+      setCoordinates({ lat, lng });
+    }
   };
 
   const openDirections = () => {

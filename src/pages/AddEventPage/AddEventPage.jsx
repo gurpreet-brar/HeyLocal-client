@@ -231,12 +231,7 @@ function AddEventPage() {
         />
         <ToastContainer position="top-left" />
 
-        <Map
-          setAddress={setAddress}
-          coordinates={coordinates}
-          setCoordinates={setCoordinates}
-          isEditable={true}
-        />
+        <Map setAddress={setAddress} isEditable={true} />
       </section>
     </main>
   );
