@@ -6,18 +6,31 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+  background-color: #06232c;
+  color: rgba(255, 255, 255, 0.717);
 
   @include tablet {
     padding: 2rem;
   }
 
   &__logo {
-    @include page-header;
+    @include page-subheader;
   }
 
   &__nav {
-    display: flex;
-    gap: 1rem;
-    @include body-medium;
+    display: none;
+    @include tablet {
+      display: flex;
+      gap: 1rem;
+      @include body-medium;
+    }
+  }
+
+  &__search {
+    width: 1.5rem;
+    height: 1.5rem;
+    @include tablet {
+      display: none;
+    }
   }
 }

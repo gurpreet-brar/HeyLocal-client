@@ -7,6 +7,7 @@ import axios from "axios";
 function EventPage() {
   const { id } = useParams();
   const [event, setEvent] = useState(null);
+  const [isJoined, setIsJoined] = useState(false);
   const base_url = import.meta.env.VITE_API_URL;
 
   const getEvent = async () => {
@@ -43,12 +44,29 @@ function EventPage() {
     getEvent();
   }, [id]);
 
+  const handleClick = () => {
+    setIsJoined((prev) => !prev);
+  };
+  useEffect(() => {
+    console.log(isJoined);
+  }, [isJoined]);
+
   return (
     event && (
       <main className="event__main">
         <div className="event__image">
           <img src={event.image_url} alt={event.title} />
           <h3>{event.title}</h3>
+        </div>
+        <div className="event__join">
+          <button type="button" onClick={handleClick} disabled={isJoined}>
+            {isJoined ? "Joined" : "Join"}
+          </button>
+          {isJoined && (
+            <a href={`${event.chat_link}`} target="_blank">
+              <button>Join Event Chat</button>
+            </a>
+          )}
         </div>
         <div className="event__desc">
           <p>{event.description}</p>

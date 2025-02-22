@@ -31,17 +31,26 @@ function Featured() {
   }, []);
   return (
     <section className="featured">
-      <h3 className="featured__title">Featured</h3>
+      <h3 className="featured__title">Top events</h3>
       <div className="featured__events">
         {featuredEvents && (
           <div className="featured__container">
             <div
               className="featured__main"
-              style={{ backgroundImage: `url(${featuredEvents[0].image_url})` }}
+              style={{
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),url(${featuredEvents[0].image_url})`,
+              }}
             >
-              <h1>{featuredEvents[0].title}</h1>
-              <p>{getDate(featuredEvents[0].date)}</p>
-              <a href={`/event/${featuredEvents[0].event_id}`} className="btn">
+              <h1 className="featured__main-header">
+                {featuredEvents[0].title}
+              </h1>
+              <p className="featured__main-info">
+                {getDate(featuredEvents[0].date)}
+              </p>
+              <a
+                className="featured__main-link"
+                href={`/event/${featuredEvents[0].event_id}`}
+              >
                 View Event
               </a>
             </div>
