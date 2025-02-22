@@ -1,8 +1,14 @@
 import "./Search.scss";
 import { useState, useEffect } from "react";
 
-function Search({ getFilteredEvents }) {
-  const [category, setCategory] = useState("");
+function Search({ getFilteredEvents, defaultCategory }) {
+  const [category, setCategory] = useState(defaultCategory || "");
+
+  useEffect(() => {
+    if (defaultCategory) {
+      setCategory(defaultCategory);
+    }
+  }, [defaultCategory]);
 
   const handleChange = (event) => {
     setCategory(event.target.value);
@@ -10,12 +16,15 @@ function Search({ getFilteredEvents }) {
 
   useEffect(() => {
     const delay = setTimeout(() => {
-      getFilteredEvents(category);
+      if (category.trim() === "") {
+        getFilteredEvents("");
+      } else {
+        getFilteredEvents(category);
+      }
     }, 500);
     return () => clearTimeout(delay);
   }, [category]);
 
-  category && console.log(category);
   return (
     <div className="search">
       <input

@@ -1,12 +1,15 @@
 import "./EventsPage.scss";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Search from "../../components/Search/Search";
 import axios from "axios";
 
 function EventsPage() {
   const base_url = import.meta.env.VITE_API_URL;
+  const [searchParams] = useSearchParams();
   const [events, setEvents] = useState(null);
+  const searchedCategory = searchParams.get("category") || "";
 
   const getEvents = async () => {
     try {
@@ -19,11 +22,14 @@ function EventsPage() {
   };
 
   const getFilteredEvents = async (category) => {
+    if (!category) {
+      getEvents();
+      return;
+    }
     try {
-      let response = await axios.get(`${base_url}/events?category=${category}`);
-      if (!category) {
-        response = await axios.get(`${base_url}/events`);
-      }
+      const response = await axios.get(
+        `${base_url}/events?category=${category}`
+      );
       console.log(response.data);
       setEvents(response.data);
     } catch (error) {
@@ -32,8 +38,12 @@ function EventsPage() {
   };
 
   useEffect(() => {
-    getEvents();
-  }, []);
+    if (searchedCategory) {
+      getFilteredEvents(searchedCategory);
+    } else {
+      getEvents();
+    }
+  }, [searchedCategory]);
 
   const getDate = (dateString) => {
     const date = new Date(dateString);
@@ -57,7 +67,10 @@ function EventsPage() {
   return (
     events && (
       <main className="events__main">
-        <Search getFilteredEvents={getFilteredEvents} />
+        <Search
+          getFilteredEvents={getFilteredEvents}
+          defaultCategory={searchedCategory}
+        />
         <section className="events__wrapper">
           {events.length === 0 && <p>No events found</p>}
           {events.map((event) => (

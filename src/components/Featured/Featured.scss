@@ -6,14 +6,13 @@
 
   &__title {
     @include body-large;
-    font-weight: 500;
+    font-weight: 600;
     color: $blue;
     padding: 0.5rem 0;
   }
 
   &__events {
-    margin: 1rem 0;
-    padding-bottom: 3rem;
+    margin-top: 1rem;
   }
 
   &__container {
@@ -26,6 +25,7 @@
     width: 100%;
     max-width: 75rem;
     margin: 2rem auto;
+    margin-bottom: 1rem;
     padding: 0.625rem;
     overflow: visible;
     @include tablet {
@@ -38,7 +38,8 @@
 
   &__event-card {
     background-color: $grey;
-    padding: 0.9375rem;
+    padding: 1rem;
+    padding-bottom: 1.5rem;
     border-radius: 0.625rem;
     text-align: center;
     transition: transform 0.3s ease;
