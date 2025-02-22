@@ -1,0 +1,72 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.footer {
+  background: $blue;
+  color: white;
+  padding: 2.5rem 1.5rem;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: auto;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+    @include tablet {
+      flex-direction: row;
+    }
+  }
+
+  &__title {
+    @include page-subheader;
+    margin-bottom: 2rem;
+  }
+
+  &__subtitle {
+    @include body-large;
+    font-weight: 600;
+    margin: 1.5rem 0;
+  }
+
+  &__list {
+    list-style: none;
+    padding: 0;
+  }
+
+  &__item {
+    margin-bottom: 0.3125rem;
+    @include body-medium;
+  }
+
+  &__social-icons {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .social-icons__link {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    width: 1.5rem;
+    height: 1.5rem;
+    &:hover {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    img {
+      width: 1.5rem;
+      height: 1.5rem;
+      transition: transform 0.3s ease;
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  &__bottom {
+    text-align: center;
+    margin-top: 1.25rem;
+    @include body-small;
+  }
+}
