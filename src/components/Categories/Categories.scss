@@ -1,0 +1,57 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.categories {
+  text-align: center;
+  padding: 1rem;
+  padding-bottom: 3rem;
+  background: #f9f9f9;
+
+  &__title {
+    @include body-large;
+    color: $blue;
+    font-weight: 600;
+    text-align: left;
+  }
+
+  &__container {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .category-card {
+    cursor: pointer;
+    background: $grey;
+    border-radius: 0.75rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: calc((100% - 1.5rem) / 2);
+    height: 4rem;
+    justify-content: center;
+    text-align: center;
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    img {
+      width: 1.5rem;
+      height: 1.5rem;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    h3 {
+      @include body-small;
+      color: $blue;
+      font-weight: 500;
+    }
+  }
+}

@@ -1,0 +1,74 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.options {
+  text-align: center;
+  padding: 3.75rem 1.25rem;
+  background: linear-gradient(135deg, $blue, $light-blue);
+  color: white;
+
+  &__title {
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+    font-weight: bold;
+  }
+
+  &__tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-bottom: 1.875rem;
+  }
+
+  .tab {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    padding: 0.5rem 1rem;
+    @include body-medium;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+
+    &.active {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  &__content {
+    margin-top: 20px;
+  }
+
+  .join-content,
+  .host-content {
+    max-width: 31.25rem;
+    margin: auto;
+  }
+
+  .content__text {
+    @include body-large;
+  }
+
+  .join-btn,
+  .host-btn {
+    background: white;
+    color: $blue;
+    border: none;
+    padding: 0.5rem 1rem;
+    @include body-medium;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.8);
+    }
+  }
+}

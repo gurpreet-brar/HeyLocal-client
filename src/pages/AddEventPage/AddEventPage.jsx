@@ -4,6 +4,7 @@ import EventForm from "../../components/EventForm/EventForm";
 import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
 import axios from "axios";
+import { useEffect } from "react";
 
 function AddEventPage() {
   const cloud_url = import.meta.env.VITE_CLOUDINARY_URL;
@@ -185,37 +186,47 @@ function AddEventPage() {
     formData.append("upload_preset", upload_preset);
     try {
       const response = await axios.post(cloud_url, formData);
+      console.log(response.data);
       setImageURL(response.data.secure_url);
     } catch (error) {
       console.log("Error uploading image to cloudinary", error);
     }
-
-    try {
-      const data = { ...formInput, location: address };
-      const response = await axios.post(`${base_url}/events`, data);
-      const event_id = response.data.id;
-      const image_data = { event_id, imageURL };
-      const res = await axios.post(`${base_url}/images`, image_data);
-      toast("Event details successfully submitted!!");
-    } catch (error) {
-      console.error("Error adding event in the backend", error);
-    }
-
-    setFormInput({
-      title: "",
-      description: "",
-      category: "",
-      date: "",
-      time: "",
-      duration: "",
-      total_spots: "",
-      chat_link: "",
-    });
-    setAddress("");
-    setCoordinates(null);
-    setImage(null);
-    setImageURL(null);
   };
+
+  useEffect(() => {
+    if (!imageURL) return;
+    const submit = async () => {
+      try {
+        console.log(imageURL);
+        const data = { ...formInput, location: address };
+        console.log(data);
+        const response = await axios.post(`${base_url}/events`, data);
+        const event_id = response.data.id;
+        const image_data = { event_id, image_url: imageURL };
+        console.log(image_data);
+        const res = await axios.post(`${base_url}/images`, image_data);
+        toast("Event details successfully submitted!!");
+      } catch (error) {
+        console.error("Error adding event in the backend", error);
+      }
+      setFormInput({
+        title: "",
+        description: "",
+        category: "",
+        date: "",
+        time: "",
+        duration: "",
+        total_spots: "",
+        chat_link: "",
+      });
+      setAddress("");
+      setCoordinates(null);
+      setImage(null);
+      setImageURL(null);
+    };
+
+    submit();
+  }, [imageURL]);
 
   return (
     <main className="add__main">

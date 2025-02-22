@@ -3,9 +3,10 @@ import "./Hero.scss";
 function Hero() {
   return (
     <section className="hero">
-      <p className="hero__text">
-        Discover, Connect, and Experience the Best Local Events
-      </p>
+      <video autoPlay loop muted className="hero__video">
+        <source src="/HeyLocal.mp4" type="video/mp4" />
+      </video>
+      <div className="hero__overlay"></div>
     </section>
   );
 }
