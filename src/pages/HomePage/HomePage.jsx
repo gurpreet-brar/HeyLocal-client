@@ -3,7 +3,7 @@ import Featured from "../../components/Featured/Featured";
 import Hero from "../../components/Hero/Hero";
 import Categories from "../../components/Categories/Categories";
 import Options from "../../components/Options/Options";
-import Footer from "../../components/Footer/Footer";
+import PastEvents from "../../components/PastEvents/PastEvents";
 
 function HomePage() {
   return (
@@ -12,7 +12,7 @@ function HomePage() {
       <Featured />
       <Categories />
       <Options />
-      <Footer />
+      <PastEvents />
     </main>
   );
 }

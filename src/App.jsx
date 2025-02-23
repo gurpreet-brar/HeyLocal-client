@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import EventsPage from "./pages/EventsPage/EventsPage";
 import EventPage from "./pages/EventPage/EventPage";
 import AddEventPage from "./pages/AddEventPage/AddEventPage";
+import Footer from "./components/Footer/Footer";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.scss";
@@ -18,6 +19,7 @@ function App() {
           <Route path="/event/:id" element={<EventPage />} />
           <Route path="/event/add" element={<AddEventPage />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </div>
   );
