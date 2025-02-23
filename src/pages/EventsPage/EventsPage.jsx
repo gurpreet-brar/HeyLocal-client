@@ -78,12 +78,12 @@ function EventsPage() {
               <img
                 src={event.image_url}
                 alt={event.title}
-                className="event__image"
+                className="event__img"
               />
-              <div className="event__info">
-                <h2>{event.title}</h2>
-                <p>
-                  {`${getDate(event.date)}`} | {event.location}
+              <div className="event__text">
+                <h2 className="event__title">{event.title}</h2>
+                <p className="event__det">
+                  {`${getDate(event.date)}`} | {`${getTime(event.time)}`}
                 </p>
                 <Link to={`/event/${event.id}`}>
                   <button className="event__button">View Details</button>
