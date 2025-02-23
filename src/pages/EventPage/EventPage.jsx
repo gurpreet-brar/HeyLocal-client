@@ -72,12 +72,16 @@ function EventPage() {
           <p>{event.description}</p>
         </div>
         <div className="event__info">
-          <p>Venue : {event.location}</p>
           <p>
-            Date and Time: {`${getDate(event.date)}`} at{" "}
+            <b>Venue</b> : {event.location}
+          </p>
+          <p>
+            <b>Date and Time</b>: {`${getDate(event.date)}`} at{" "}
             {`${getTime(event.time)}`}
           </p>
-          <p>Duration : {event.duration} minutes</p>
+          <p>
+            <b>Duration </b>: {event.duration} minutes
+          </p>
         </div>
         <div className="event__location">
           <div className="event__address">
