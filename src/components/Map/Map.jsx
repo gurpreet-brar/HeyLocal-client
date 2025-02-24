@@ -86,9 +86,13 @@ function Map({ address, setAddress, isEditable = false }) {
   return (
     <section className="map">
       <GoogleMap
-        zoom={coordinates ? 14 : 10}
+        mapContainerClassName="map__container"
+        zoom={coordinates ? 12 : 10}
         center={coordinates || defaultCenter}
-        mapContainerStyle={{ width: "100%", height: "500px" }}
+        // mapContainerStyle={{ width: "100%", height: "300px" }}
+        options={{
+          mapTypeControl: false,
+        }}
       >
         {coordinates && (
           <Marker

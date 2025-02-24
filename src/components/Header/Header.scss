@@ -5,11 +5,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 1.5rem;
   background-color: #06232c;
   color: white;
   @include tablet {
-    padding: 2rem;
+    padding: 1.5rem 3rem;
   }
 
   &__logo {

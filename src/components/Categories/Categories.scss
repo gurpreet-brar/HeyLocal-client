@@ -3,15 +3,24 @@
 
 .categories {
   text-align: center;
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   padding-bottom: 3rem;
   background: #f9f9f9;
+  @include tablet {
+    padding: 1.5rem 3rem;
+  }
+  @include desktop {
+    padding: 3rem 3rem;
+  }
 
   &__title {
     @include body-large;
     color: $blue;
     font-weight: 600;
     text-align: left;
+    @include tablet {
+      font-size: 1.5rem;
+    }
   }
 
   &__container {
@@ -21,6 +30,14 @@
     flex-wrap: wrap;
     gap: 1.5rem;
     padding: 0 0.5rem;
+    @include tablet {
+      gap: 2.5rem;
+      padding: 0 3rem;
+    }
+
+    @include desktop {
+      padding: 3rem 3rem;
+    }
   }
 
   .category-card {
@@ -36,6 +53,9 @@
     height: 4rem;
     justify-content: center;
     text-align: center;
+    @include tablet {
+      width: calc((100% - 2.5rem) / 2);
+    }
 
     &:hover {
       transform: scale(1.05);

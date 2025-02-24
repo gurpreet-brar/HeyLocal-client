@@ -241,8 +241,9 @@ function AddEventPage() {
           error={error}
         />
         <ToastContainer position="top-left" />
-
-        <Map setAddress={setAddress} isEditable={true} />
+        <div className="add__map">
+          <Map setAddress={setAddress} isEditable={true} />
+        </div>
       </section>
     </main>
   );
