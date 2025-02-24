@@ -49,6 +49,7 @@
 
     @include desktop {
       width: 40%;
+      margin: 0rem;
     }
   }
   .slick-slide {
@@ -69,6 +70,7 @@
     }
     @include tablet {
       width: 90%;
+      margin-bottom: 0;
     }
     @include desktop {
       width: 85%;

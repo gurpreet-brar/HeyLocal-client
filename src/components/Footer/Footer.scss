@@ -6,6 +6,19 @@
   color: white;
   padding: 2.5rem 1.5rem;
 
+  @include desktop {
+    padding: 2.5rem 3rem;
+  }
+
+  &__logo {
+    display: none;
+    @include tablet {
+      display: flex;
+      @include page-subheader;
+      margin-left: 2rem;
+    }
+  }
+
   &__content {
     display: flex;
     flex-direction: column;
@@ -16,23 +29,39 @@
 
     @include tablet {
       flex-direction: row;
+      align-items: center;
+      padding: 0 2rem;
+      max-width: 1280px;
+      margin: 0 auto;
+      margin-top: 6rem;
+      padding-bottom: 1.5rem;
     }
   }
 
   &__title {
     @include page-subheader;
     margin-bottom: 2rem;
+    @include tablet {
+      display: none;
+    }
   }
 
   &__subtitle {
     @include body-large;
     font-weight: 600;
     margin: 1.5rem 0;
+    @include tablet {
+      display: none;
+    }
   }
 
   &__list {
     list-style: none;
     padding: 0;
+    @include tablet {
+      display: flex;
+      gap: 1rem;
+    }
   }
 
   &__item {
@@ -68,5 +97,8 @@
     text-align: center;
     margin-top: 1.25rem;
     @include body-small;
+    @include tablet {
+      margin-top: 1.5rem;
+    }
   }
 }

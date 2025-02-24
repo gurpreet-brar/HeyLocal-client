@@ -7,6 +7,8 @@ import twitter from "../../assets/icons/X_twitter.svg";
 function Footer() {
   return (
     <footer className="footer">
+      <h3 className="footer__logo">HeyLocal</h3>
+
       <div className="footer__content">
         <div className="footer__links">
           <h3 className="footer__title">HeyLocal</h3>
